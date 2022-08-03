@@ -38,3 +38,15 @@ DB_PASS= # Zabbix username's password
 
 INTERVAL=60 # Data day to be protected
 ```
+
+Finally, the service must be restarted.
+
+```
+sudo systemctl restart zabbix-cleaner
+```
+
+To make sure it works correctly :
+
+```
+sudo systemctl status zabbix-cleaner
+```

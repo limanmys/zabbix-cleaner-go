@@ -10,6 +10,7 @@ import (
 
 func main() {
 	utils.InitLogger()
+
 	for {
 		var auditog []models.Audit
 		err := operations.Delete("auditlog", auditog)

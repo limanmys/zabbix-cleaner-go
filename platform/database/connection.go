@@ -5,6 +5,7 @@ import (
 	"os"
 	"sync"
 
+	_ "github.com/joho/godotenv/autoload"
 	"gorm.io/gorm"
 )
 
@@ -21,7 +22,7 @@ func Connection() *gorm.DB {
 
 func initialize() *gorm.DB {
 	switch os.Getenv("DB_DRIVER") {
-	case "postgres":
+	case "postgresql":
 		return initializePostgres()
 	case "mysql":
 		return initializeMysql()
