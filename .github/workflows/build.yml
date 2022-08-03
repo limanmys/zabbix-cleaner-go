@@ -40,6 +40,9 @@ jobs:
         dpkg-deb --build $TMP_DIR
         mv /tmp/zabbix-cleaner.deb /tmp/zabbix-cleaner-x64.deb
         rm -rf $DEBIAN_PATH
+
+        sed -i s/%VERSION%/${{ github.run_number }}/g scripts/redhat/cleaner.spec
+        rpmbuild -ba scripts/redhat/cleaner.spec --define "_app_dir $TMP_DIR" --define "_rpmdir /tmp" --define "_rpmfilename zabbix-cleaner-x64.rpm"
     - name: Release
       id: create_release
       uses: softprops/action-gh-release@v1
@@ -48,5 +51,6 @@ jobs:
       with:
           files: |
             /tmp/zabbix-cleaner-x64.deb
+            /tmp/zabbix-cleaner-x64.rpm
           name: "Release ${{ github.run_number }}"
           tag_name: "release.${{ github.run_number }}"
