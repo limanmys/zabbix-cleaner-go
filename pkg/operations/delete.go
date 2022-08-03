@@ -1,11 +1,11 @@
-package service
+package operations
 
 import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/limanmys/zabbix-cleaner-go/pkg/database"
 	"github.com/limanmys/zabbix-cleaner-go/pkg/utils"
+	"github.com/limanmys/zabbix-cleaner-go/platform/database"
 	"gorm.io/gorm/clause"
 )
 
