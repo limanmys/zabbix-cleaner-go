@@ -1,0 +1,32 @@
+chmod -R 770 /opt/zabbix-cleaner
+chown -R root:root /opt/zabbix-cleaner
+
+if ! [ -f "/opt/zabbix-cleaner/.env" ]; then
+    mv /opt/zabbix-cleaner/.env.example /opt/zabbix-cleaner/.env
+fi
+
+if [ -f "/usr/lib/systemd/system/zabbix-cleaner.service " ]; then
+    rm -rf /usr/lib/systemd/system/zabbix-cleaner.service  2>/dev/null || true
+    systemctl disable zabbix-cleaner.service 2>/dev/null || true
+    systemctl stop zabbix-cleaner.service 2>/dev/null || true
+    systemctl daemon-reload 2>/dev/null || true
+fi
+
+echo """
+[Unit]
+Description=Zabbix Database Cleaner
+
+[Service]
+WorkingDirectory=/opt/zabbix-cleaner
+Type=simple
+Restart=always
+RestartSec=5s
+ExecStart=/opt/zabbix-cleaner/main
+
+[Install]
+WantedBy=multi-user.target
+""" > /usr/lib/systemd/system/zabbix-cleaner.service
+
+systemctl daemon-reload
+systemctl enable zabbix-cleaner.service
+systemctl restart zabbix-cleaner.service

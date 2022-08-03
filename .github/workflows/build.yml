@@ -1,0 +1,52 @@
+name: Zabbix Database Cleaner Builder
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  workflow_dispatch:
+  repository_dispatch:
+    types: [sync]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: Getting Go Binaries
+      uses: actions/setup-go@v2
+      with:
+          go-version: '1.18'
+    - name: Build
+      run: |
+          go get -u && go mod tidy
+          go build -ldflags="-s -w" -o "cleaner" main.go
+    - name: Make DEB package
+      run: |
+        TMP_DIR=/tmp/zabbix-cleaner
+        DEBIAN_PATH=$TMP_DIR/DEBIAN
+        SERVER_BIN_PATH=$TMP_DIR/opt/zabbix-cleaner
+        rm -rf $TMP_DIR
+        mkdir $TMP_DIR
+        mkdir $DEBIAN_PATH
+        mkdir -p $SERVER_BIN_PATH
+        cp ./scripts/debian/control $DEBIAN_PATH/control
+        sed -i s/%VERSION%/${{ github.run_number }}/g $DEBIAN_PATH/control
+        cat $DEBIAN_PATH/control
+        cp ./scripts/debian/postinst $DEBIAN_PATH/postinst
+        chmod 775 $DEBIAN_PATH/postinst
+        cp cleaner $SERVER_BIN_PATH/main
+        cp .env.example $SERVER_BIN_PATH/.env.example
+        dpkg-deb --build $TMP_DIR
+        mv /tmp/zabbix-cleaner.deb /tmp/zabbix-cleaner-x64.deb
+        rm -rf $DEBIAN_PATH
+    - name: Release
+      id: create_release
+      uses: softprops/action-gh-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.TOKEN }}
+      with:
+          files: |
+            /tmp/zabbix-cleaner-x64.deb
+          name: "Release ${{ github.run_number }}"
+          tag_name: "release.${{ github.run_number }}"
