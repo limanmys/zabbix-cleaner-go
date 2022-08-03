@@ -50,3 +50,29 @@ To make sure it works correctly :
 ```
 sudo systemctl status zabbix-cleaner
 ```
+
+If service deployment is correctly, you will see deleted rows under /var/log/zabbix-cleaner like this :
+
+```
+├── cleaner.log
+└── deleted_rows
+    ├── acknowledges
+    │   └── deleted_2022-08-03.log
+    ├── alerts
+    ├── auditlog
+    │   └── deleted_2022-08-03.log
+    ├── events
+    │   └── deleted_2022-08-03.log
+    ├── history
+    │   └── deleted_2022-08-03.log
+    ├── history_str
+    │   └── deleted_2022-08-03.log
+    ├── history_text
+    │   └── deleted_2022-08-03.log
+    ├── history_uint
+    │   └── deleted_2022-08-03.log
+    ├── trends
+    │   └── deleted_2022-08-03.log
+    └── trends_uint
+        └── deleted_2022-08-03.log
+```
