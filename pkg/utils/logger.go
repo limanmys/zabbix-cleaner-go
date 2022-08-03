@@ -30,7 +30,7 @@ func InitLogger() {
 		}
 	}
 
-	info, err := os.OpenFile(filepath.FromSlash("/var/log/zabbix-db-cleaner/cleaner.log"), os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0770)
+	info, err := os.OpenFile(filepath.FromSlash("/var/log/zabbix-cleaner/cleaner.log"), os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0770)
 	if err != nil {
 		log.Fatal("cannot create log file")
 	}

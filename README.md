@@ -35,8 +35,8 @@ DB_PORT=5432/3306 # Database port
 DB_NAME=zabbix # Zabbix database name (default:zabbix)
 DB_USER=zabbix # Zabbix database username (default:zabbix)
 DB_PASS= # Zabbix username's password
-
 INTERVAL=60 # Data day to be protected
+SAVE_DELETED_ROWS=true/false # If true, service will save your rows under /var/log/zabbix-cleaner
 ```
 
 Finally, the service must be restarted.

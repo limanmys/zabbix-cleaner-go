@@ -3,6 +3,7 @@ package operations
 import (
 	"encoding/json"
 	"fmt"
+	"os"
 
 	"github.com/limanmys/zabbix-cleaner-go/pkg/utils"
 	"github.com/limanmys/zabbix-cleaner-go/platform/database"
@@ -22,7 +23,10 @@ func Delete(tableName string, model any) error {
 		return err
 	}
 
-	utils.WriteFile(tableName, string(b))
+	if os.Getenv("SAVE_DELETED_ROWS") != "false" {
+		utils.WriteFile(tableName, string(b))
+
+	}
 	utils.Logger.Printf("%s table successfully cleaned from %d.", tableName, deleteTime)
 	return nil
 }
