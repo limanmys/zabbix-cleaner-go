@@ -9,19 +9,20 @@ import (
 	"gorm.io/gorm/clause"
 )
 
-func Delete(tableName string, model any) (string, error) {
+func Delete(tableName string, model any) error {
 	deleteTime, err := utils.GetTime()
 	if err != nil {
-		return "", err
+		return err
 	}
 
 	database.Connection().Clauses(clause.Returning{}).Table(tableName).Where(fmt.Sprintf("clock < %d", deleteTime)).Delete(&model)
 
 	b, err := json.Marshal(model)
 	if err != nil {
-		return "", err
+		return err
 	}
 
+	utils.WriteFile(tableName, string(b))
 	utils.Logger.Printf("%s table successfully cleaned from %d.", tableName, deleteTime)
-	return string(b), nil
+	return nil
 }
