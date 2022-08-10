@@ -4,7 +4,10 @@
   <img src="https://img.shields.io/github/downloads/limanmys/zabbix-cleaner-go/total?color=blue&style=for-the-badge" width="170" />
   <img src="https://img.shields.io/github/languages/code-size/limanmys/zabbix-cleaner-go?color=blue&style=for-the-badge" width="170" /> 
   <img src="https://img.shields.io/github/stars/limanmys/zabbix-cleaner-go?color=yellow&style=for-the-badge" width="150" /> 
+  
+   <img src="https://img.shields.io/github/go-mod/go-version/limanmys/zabbix-cleaner-go?color=blue&style=for-the-badge" width="150" />
 </p>
+
 ----
 This service is optionally prepared with the aim of cleaning meaningless data kept in the Zabbix database.
 
