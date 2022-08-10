@@ -17,7 +17,6 @@ func main() {
 			if err != nil {
 				utils.Logger.Printf("error when deleting %s data err:%s", table, err.Error())
 			}
-
 		}
 		time.Sleep(24 * time.Hour)
 	}
