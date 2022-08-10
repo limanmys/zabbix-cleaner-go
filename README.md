@@ -35,8 +35,7 @@ DB_PORT=5432/3306 # Database port
 DB_NAME=zabbix # Zabbix database name (default:zabbix)
 DB_USER=zabbix # Zabbix database username (default:zabbix)
 DB_PASS= # Zabbix username's password
-INTERVAL=60 # Data day to be protected
-SAVE_DELETED_ROWS=true/false # If true, service will save your rows under /var/log/zabbix-cleaner
+INTERVAL=30 # Data day to be protected
 ```
 
 Finally, the service must be restarted.
@@ -49,30 +48,4 @@ To make sure it works correctly :
 
 ```
 sudo systemctl status zabbix-cleaner
-```
-
-If service deployment is correctly, you will see deleted rows under /var/log/zabbix-cleaner like this :
-
-```
-├── cleaner.log
-└── deleted_rows
-    ├── acknowledges
-    │   └── deleted_2022-08-03.log
-    ├── alerts
-    ├── auditlog
-    │   └── deleted_2022-08-03.log
-    ├── events
-    │   └── deleted_2022-08-03.log
-    ├── history
-    │   └── deleted_2022-08-03.log
-    ├── history_str
-    │   └── deleted_2022-08-03.log
-    ├── history_text
-    │   └── deleted_2022-08-03.log
-    ├── history_uint
-    │   └── deleted_2022-08-03.log
-    ├── trends
-    │   └── deleted_2022-08-03.log
-    └── trends_uint
-        └── deleted_2022-08-03.log
 ```
