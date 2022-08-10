@@ -1,16 +1,14 @@
 package database
 
 import (
+	"database/sql"
 	"fmt"
 	"os"
-
-	"gorm.io/driver/mysql"
-	"gorm.io/gorm"
 )
 
-func initializeMysql() *gorm.DB {
+func initializeMysql() *sql.DB {
 	dsn := fmt.Sprintf(
-		"%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local",
+		"%s:%s@tcp(%s:%s)%s",
 		os.Getenv("DB_USER"),
 		os.Getenv("DB_PASS"),
 		os.Getenv("DB_HOST"),
@@ -18,7 +16,7 @@ func initializeMysql() *gorm.DB {
 		os.Getenv("DB_NAME"),
 	)
 
-	connection, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	connection, err := sql.Open("mysql", dsn)
 
 	if err != nil {
 		return nil

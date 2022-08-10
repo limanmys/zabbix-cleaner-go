@@ -1,24 +1,24 @@
 package database
 
 import (
+	"database/sql"
 	"fmt"
 	"os"
 
-	"gorm.io/driver/postgres"
-	"gorm.io/gorm"
+	_ "github.com/lib/pq"
 )
 
-func initializePostgres() *gorm.DB {
+func initializePostgres() *sql.DB {
 	dsn := fmt.Sprintf(
-		"host=%s port=%s user=%s password=%s dbname=%s sslmode=disable timezone=Europe/Istanbul",
-		os.Getenv("DB_HOST"),
-		os.Getenv("DB_PORT"),
+		"postgresql://%s:%s@%s:%s/%s?sslmode=disable",
 		os.Getenv("DB_USER"),
 		os.Getenv("DB_PASS"),
+		os.Getenv("DB_HOST"),
+		os.Getenv("DB_PORT"),
 		os.Getenv("DB_NAME"),
 	)
 
-	connection, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+	connection, err := sql.Open("postgres", dsn)
 
 	if err != nil {
 		return nil

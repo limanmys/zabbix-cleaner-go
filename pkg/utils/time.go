@@ -16,9 +16,6 @@ func GetTime() (int, error) {
 
 	time := time.Now().Add(time.Duration(interval) * 24 * time.Hour).Unix()
 
-	//var table models.Alerts
-	//database.Connection().Table("alerts").Where(fmt.Sprintf("clock < %d", deleteTime)).Delete(&table)
-
 	return int(time), nil
 }
 

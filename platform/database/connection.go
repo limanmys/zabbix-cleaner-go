@@ -1,18 +1,18 @@
 package database
 
 import (
+	"database/sql"
 	"log"
 	"os"
 	"sync"
 
 	_ "github.com/joho/godotenv/autoload"
-	"gorm.io/gorm"
 )
 
 var once sync.Once
-var connection *gorm.DB
+var connection *sql.DB
 
-func Connection() *gorm.DB {
+func Connection() *sql.DB {
 	once.Do(func() {
 		connection = initialize()
 	})
@@ -20,14 +20,14 @@ func Connection() *gorm.DB {
 	return connection
 }
 
-func initialize() *gorm.DB {
+func initialize() *sql.DB {
 	switch os.Getenv("DB_DRIVER") {
 	case "postgresql":
 		return initializePostgres()
 	case "mysql":
 		return initializeMysql()
 	default:
-		log.Fatalln("You must specify a database driver. Choices are 'postgres' or 'mysql'")
+		log.Fatalln("You must specify a database driver. Choices are 'postgresql' or 'mysql'")
 		return nil
 	}
 }

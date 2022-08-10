@@ -1,32 +1,28 @@
 package operations
 
 import (
-	"encoding/json"
 	"fmt"
-	"os"
 
 	"github.com/limanmys/zabbix-cleaner-go/pkg/utils"
 	"github.com/limanmys/zabbix-cleaner-go/platform/database"
-	"gorm.io/gorm/clause"
 )
 
-func Delete(tableName string, model any) error {
+func Delete(tableName string) error {
 	deleteTime, err := utils.GetTime()
 	if err != nil {
 		return err
 	}
 
-	database.Connection().Clauses(clause.Returning{}).Table(tableName).Where(fmt.Sprintf("clock < %d", deleteTime)).Delete(&model)
-
-	b, err := json.Marshal(model)
+	rawQuery := fmt.Sprintf("DELETE FROM %s WHERE clock < %d", tableName, deleteTime)
 	if err != nil {
 		return err
 	}
 
-	if os.Getenv("SAVE_DELETED_ROWS") != "false" {
-		utils.WriteFile(tableName, string(b))
-
+	result, err := database.Connection().Exec(rawQuery)
+	if err != nil {
+		return err
 	}
-	utils.Logger.Printf("%s table successfully cleaned from %d.", tableName, deleteTime)
+	utils.Logger.Printf("SQL Result : %v\n", result)
+	utils.Logger.Printf("%s table successfully cleaned from %d.\n", tableName, deleteTime)
 	return nil
 }
