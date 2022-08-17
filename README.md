@@ -3,8 +3,8 @@
 <p float="left">
   <img src="https://img.shields.io/github/downloads/limanmys/zabbix-cleaner-go/total?color=blue&style=for-the-badge" width="100" />
   <img src="https://img.shields.io/github/languages/code-size/limanmys/zabbix-cleaner-go?color=blue&style=for-the-badge" width="115" /> 
-  <img src="https://img.shields.io/github/stars/limanmys/zabbix-cleaner-go?color=yellow&style=for-the-badge" width="65" /> 
-  <img src="https://img.shields.io/github/go-mod/go-version/limanmys/zabbix-cleaner-go?color=blue&style=for-the-badge" width="75" />
+  <img src="https://img.shields.io/github/stars/limanmys/zabbix-cleaner-go?color=yellow&style=for-the-badge" width="72" /> 
+  <img src="https://img.shields.io/github/go-mod/go-version/limanmys/zabbix-cleaner-go?color=blue&style=for-the-badge" width="72" />
 </p>
 
 ----
